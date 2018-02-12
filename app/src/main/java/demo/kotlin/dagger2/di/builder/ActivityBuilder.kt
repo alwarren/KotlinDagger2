@@ -24,6 +24,8 @@ import demo.kotlin.dagger2.di.module.DataActivityModule
 import demo.kotlin.dagger2.di.module.MainActivityModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import demo.kotlin.dagger2.WidgetActivity
+import demo.kotlin.dagger2.di.module.WidgetActivityModule
 
 @Suppress("unused")
 @Module
@@ -37,4 +39,7 @@ abstract class ActivityBuilder {
 
     @ContributesAndroidInjector(modules = [(DataActivityModule::class)])
     internal abstract fun bindViewModelActivity(): DataActivity
+
+    @ContributesAndroidInjector(modules = [(WidgetActivityModule::class)])
+    internal abstract fun bindWidgetActivity(): WidgetActivity
 }

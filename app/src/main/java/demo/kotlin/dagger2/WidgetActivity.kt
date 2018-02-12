@@ -16,30 +16,39 @@
 
 package demo.kotlin.dagger2
 
-import demo.kotlin.dagger2.arch.DataViewModel
-import demo.kotlin.dagger2.common.BaseActivity
-import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.os.Bundle
-import kotlinx.android.synthetic.main.activity_view_model.*
+import demo.kotlin.dagger2.common.*
+import kotlinx.android.synthetic.main.activity_widget.*
 import javax.inject.Inject
 
-class DataActivity : BaseActivity() {
-    private lateinit var viewModel: DataViewModel
-    @Inject lateinit var viewModelFactory: DataViewModel.Factory
+class WidgetActivity : BaseActivity() {
+    @Inject lateinit var widget1: Widget1
+    @Inject lateinit var widget2: Widget2
+
+    @Inject lateinit var thing1: Thing1
+    @Inject lateinit var thing2: Thing2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_view_model)
+        setContentView(R.layout.activity_widget)
 
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(DataViewModel::class.java)
+        button1.setOnClickListener { widget1() }
+        button2.setOnClickListener { widget2() }
 
-        viewModelText.text = viewModel.getText()
-
-        widgetButton.setOnClickListener { widgets() }
+        widget1()
     }
 
-    private fun widgets() {
-        startActivity(Intent(this, WidgetActivity::class.java))
+    @SuppressLint("SetTextI18n")
+    private fun widget1() {
+        textWidget.text =
+                widget1.hello() + "\n" +
+                thing1.hello() + "\n" +
+                thing2.hello()
+
+    }
+
+    private fun widget2() {
+        textWidget.text = widget2.hello()
     }
 }
